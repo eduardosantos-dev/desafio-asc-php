@@ -1,5 +1,5 @@
 <?php
-  class Card {
+  class Card implements JsonSerializable{
     private $suit;
     private $value;
     private $rank;
@@ -10,6 +10,14 @@
       $this->rank = $rank;
     }
 
+    public function __toString() {
+      return json_encode($this->jsonSerialize(), JSON_UNESCAPED_SLASHES);
+    }
+    
+    public function jsonSerialize() {
+      return get_object_vars($this);
+    }
+    
     public function getSuit() {
       return $this->suit;
     }
@@ -26,12 +34,5 @@
       $this->rank = $rank;
     }
     
-    public function __toString() {
-      return json_encode($this->jsonSerialize(), JSON_UNESCAPED_SLASHES);
-    }
-
-    public function jsonSerialize() {
-        return get_object_vars($this);
-    }
   }
 ?>

@@ -1,11 +1,19 @@
 <?php
 
-  class evaluateHand {
+  class evaluateHand implements JsonSerializable{
 
     private $high_card;
     private $hand_name;
     private $matches;
     private $hand_rank;
+
+    public function __toString() {
+      return json_encode($this->jsonSerialize(), JSON_UNESCAPED_SLASHES);
+    }
+    
+    public function jsonSerialize() {
+      return get_object_vars($this);
+    }
 
     public function evaluate($hand) {
       $this->highCard($hand);
@@ -27,7 +35,6 @@
           $this->high_card = $card;
         }
       }
-      echo "High Card: " . $this->high_card->getValue();
       $this->hand_rank = 1;
     }
 

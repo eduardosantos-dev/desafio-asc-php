@@ -24,33 +24,33 @@
   $players = array();
   $players[] = new Player('Jogador 1');
   $players[] = new Player('Jogador 2');
-  $players[] = new Player('Jogador 3');
-  $players[] = new Player('Jogador 4');
 
   $highestScore = 0;
-
+  
   for ($i = 0; $i < 5; $i++) {
     foreach ($players as $player) {
       $deck->draw(1, $player);
     }
   }
 
+  $json = new stdClass;
+  $json->players = array();
+
   foreach($players as $player) {
-    echo '<b>'.$player->getName().'</b><br><br>';
     $player->evaluateHand();
-
-    foreach($player->getHand()->getCards() as $card) {
-      echo '<br>' . $card->getSuit().' '.$card->getValue();
-    }
-    echo '<br>SCORE: '.$player->getHand()->getScore();
-
     if ($player->getHand()->getScore() > $highestScore) {
       $highestScore = $player->getHand()->getScore();
       $winner = $player;
     }
-    echo '<br><br><br><br>';
   }
 
-  echo 'Vencedor: ' . $winner->getName();
+  $dados = array(
+    'players' => $players,
+    'winner' => $winner 
+  );
+  
+  $dados_json = json_encode($dados);
+
+  echo $dados_json;
 
 ?>

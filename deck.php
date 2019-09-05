@@ -26,10 +26,10 @@
 
     public function createDeck() {
       return array_merge(
-        $this->createSuit('♠'),
-        $this->createSuit('♣'),
-        $this->createSuit('♥'),
-        $this->createSuit('♦')
+        $this->createSuit('S'), // Spades
+        $this->createSuit('C'), // Clubs
+        $this->createSuit('H'), // Hearts
+        $this->createSuit('D')  // Diamonds
       );
     }
 
