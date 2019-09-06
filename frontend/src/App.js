@@ -1,9 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
-import Poker from "./Poker.js";
+import Board from "./Board";
 
-function App() {
-  return <Poker />;
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { matchData: {} };
+  }
+
+  loadHands() {
+    fetch(`http://localhost`)
+      .then(res => res.json())
+      .then(res => this.setState({ matchData: res }));
+  }
+
+  componentDidMount() {
+    this.loadHands();
+  }
+
+  render() {
+    return <Board matchData={this.state.matchData} />;
+  }
 }
-
-export default App;

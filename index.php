@@ -1,9 +1,9 @@
 <?php
-  require_once('deck.php');
-  require_once('card.php');
-  require_once('hand.php');
-  require_once('player.php');
-  require_once('evaluateHand.php');
+  require_once('./api/deck.php');
+  require_once('./api/card.php');
+  require_once('./api/hand.php');
+  require_once('./api/player.php');
+  require_once('./api/evaluateHand.php');
 /*
   Royal Flush: Sequência de mesmo naipe de 10 a As
   Straight Flush: Sequência de mesmo naipe fora do intervalo de 10 a As
@@ -44,9 +44,12 @@
     }
   }
 
+  foreach($players as $player) {
+    $player->winner = ($winner == $player);
+  }
+
   $dados = array(
-    'players' => $players,
-    'winner' => $winner 
+    'players' => $players
   );
   
   $dados_json = json_encode($dados);

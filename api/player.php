@@ -30,6 +30,8 @@
     public function evaluateHand() {
       $this->evaluate->evaluate($this->getHand());
       
+      // Soma o rank da mão com o score da carta mais alta.
+      // Como critério de desempate, utilizo a carta mais alta da mão. (eu inventei essa regra ¯\_(ツ)_/¯)
       $this->getHand()->setScore($this->evaluate->getHandRank() 
                                   + $this->evaluate->getHighestCardScore()/100);
     }

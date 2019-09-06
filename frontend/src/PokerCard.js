@@ -4,8 +4,12 @@ export default class PokerCard extends Component {
   render() {
     const { cardName } = this.props;
     return (
-      <div style={{ margin: 50 }}>
-        <img style={{ width: 100 }} src={`./cards/${cardName}.svg`} />
+      <div>
+        <img
+          alt={cardName}
+          style={{ width: 100, margin: 15 }}
+          src={`./cards/${cardName}.svg`}
+        />
       </div>
     );
   }

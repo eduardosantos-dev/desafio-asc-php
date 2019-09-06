@@ -20,7 +20,6 @@
     }
 
     public function addCardToHand($card) {
-      // $card is a Card object
       $this->cards[] = $card;
     }
     
