@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2287b259cb39466b862060fac80fa425",
+    "revision": "88d0b9ab3b594fd8f904c6848251ef0b",
     "url": "/desafio-asc-php/index.html"
   },
   {
