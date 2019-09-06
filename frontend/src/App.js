@@ -9,7 +9,7 @@ export default class App extends Component {
   }
 
   loadHands() {
-    fetch(`http://localhost`)
+    fetch(`https://desafio-php-asc.appspot.com/`)
       .then(res => res.json())
       .then(res => this.setState({ matchData: res }));
   }
