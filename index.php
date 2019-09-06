@@ -1,4 +1,9 @@
 <?php
+  header('Access-Control-Allow-Origin: *');
+  header('Access-Control-Allow-Headers: Content-Length');
+  header('Access-Control-Expose-Headers: Content-Length');
+  header('Timing-Allow-Origin: *');
+  
   require_once('./api/deck.php');
   require_once('./api/card.php');
   require_once('./api/hand.php');
