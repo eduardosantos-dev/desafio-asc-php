@@ -2,8 +2,24 @@ import React, { Component } from "react";
 import Hand from "./Hand";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 
 export default class Poker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { matchData: {} };
+  }
+
+  loadHands() {
+    fetch(`https://desafio-php-asc.appspot.com/`)
+      .then(res => res.json())
+      .then(res => this.setState({ matchData: res }));
+  }
+
+  componentDidMount() {
+    this.loadHands();
+  }
+
   getSuitName(suit) {
     let suitName = "";
     switch (suit) {
@@ -49,13 +65,13 @@ export default class Poker extends Component {
   }
 
   render() {
-    const { matchData } = this.props;
+    const { matchData } = this.state;
     const { players } = matchData;
     return (
       <Container>
         {players &&
           players.map(player => (
-            <div style={{ margin: 50 }}>
+            <div style={{ margin: 50 }} key={player.name}>
               <Row className="justify-content-md-center">
                 <h1>
                   {player.name}
@@ -63,23 +79,31 @@ export default class Poker extends Component {
                 </h1>
               </Row>
               <Row className="justify-content-md-center">
-                <h1>
-                  {player.evaluate.hand_name ? (
-                    player.evaluate.hand_name
-                  ) : (
-                    <h1>
-                      Carta mais alta:{" "}
-                      {`${this.getCardName(player.evaluate.high_card.value)} de
+                {player.evaluate.hand_name ? (
+                  <h1> {player.evaluate.hand_name} </h1>
+                ) : (
+                  <h1>
+                    Carta mais alta:{" "}
+                    {`${this.getCardName(player.evaluate.high_card.value)} de
                         ${this.getSuitName(player.evaluate.high_card.suit)}`}
-                    </h1>
-                  )}
-                </h1>
+                  </h1>
+                )}
               </Row>
               <Row className="justify-content-md-center">
                 {player.hand && <Hand hand={player.hand} />}
               </Row>
             </div>
           ))}
+
+        <Row className="justify-content-md-center">
+          <Button
+            variant="primary"
+            style={{ margin: 50 }}
+            onClick={() => this.loadHands()}
+          >
+            Jogar novamente ⭯
+          </Button>
+        </Row>
       </Container>
     );
   }

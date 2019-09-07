@@ -7,8 +7,8 @@ export default class Hand extends Component {
     return (
       <div style={{ display: "flex" }}>
         {hand &&
-          hand.cards.map(card => (
-            <PokerCard cardName={`${card.value}${card.suit}`} />
+          hand.cards.map((card, index) => (
+            <PokerCard cardName={`${card.value}${card.suit}`} key={index} />
           ))}
       </div>
     );
