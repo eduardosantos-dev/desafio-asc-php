@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Hand from "./Hand";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 export default class Poker extends Component {
@@ -69,16 +70,25 @@ export default class Poker extends Component {
     const { players } = matchData;
     return (
       <Container>
+        <Row style={{ justifyContent: "center" }}>
+          <Button
+            variant="dark"
+            style={{ margin: 25 }}
+            onClick={() => this.loadHands()}
+          >
+            Jogar novamente ⭯
+          </Button>
+        </Row>
         {players &&
           players.map(player => (
             <div style={{ margin: 50 }} key={player.name}>
-              <Row className="justify-content-md-center">
+              <Row style={{ justifyContent: "center" }}>
                 <h1>
                   {player.name}
                   {player.winner === true ? ` 👑` : null}
                 </h1>
               </Row>
-              <Row className="justify-content-md-center">
+              <Row style={{ justifyContent: "center" }}>
                 {player.evaluate.hand_name ? (
                   <h1> {player.evaluate.hand_name} </h1>
                 ) : (
@@ -89,21 +99,11 @@ export default class Poker extends Component {
                   </h1>
                 )}
               </Row>
-              <Row className="justify-content-md-center">
-                {player.hand && <Hand hand={player.hand} />}
+              <Row>
+                <Col md={12}>{player.hand && <Hand hand={player.hand} />}</Col>
               </Row>
             </div>
           ))}
-
-        <Row className="justify-content-md-center">
-          <Button
-            variant="primary"
-            style={{ margin: 50 }}
-            onClick={() => this.loadHands()}
-          >
-            Jogar novamente ⭯
-          </Button>
-        </Row>
       </Container>
     );
   }
