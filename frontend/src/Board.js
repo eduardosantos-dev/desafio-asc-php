@@ -70,15 +70,6 @@ export default class Poker extends Component {
     const { players } = matchData;
     return (
       <Container>
-        <Row style={{ justifyContent: "center" }}>
-          <Button
-            variant="dark"
-            style={{ margin: 25 }}
-            onClick={() => this.loadHands()}
-          >
-            Jogar novamente ⭯
-          </Button>
-        </Row>
         {players &&
           players.map(player => (
             <div style={{ margin: 50 }} key={player.name}>
@@ -104,6 +95,15 @@ export default class Poker extends Component {
               </Row>
             </div>
           ))}
+        <Row style={{ justifyContent: "center" }}>
+          <Button
+            variant="dark"
+            style={{ margin: 25 }}
+            onClick={() => this.loadHands()}
+          >
+            Jogar novamente ⭯
+          </Button>
+        </Row>
       </Container>
     );
   }
