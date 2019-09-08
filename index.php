@@ -9,26 +9,18 @@
   require_once('./api/hand.php');
   require_once('./api/player.php');
   require_once('./api/evaluateHand.php');
-/*
-  Royal Flush: Sequência de mesmo naipe de 10 a As
-  Straight Flush: Sequência de mesmo naipe fora do intervalo de 10 a As
-  Quadra: Quatro cartas iguais
-  Full House: Duas cartas iguais junto com três cartas iguais
-  Flush: Cinco cartas diferentes do mesmo naipe
-  Sequência: Cinco cartas em sequência de naipes diferentes
-  Trinca: Apenas três cartas iguais
-  Dois pares: Apenas dois pares de cartas iguais
-  Um par: Apenas um par de cartas iguais
-  Maior carta: Valor da maior carta.
+  require_once('./api/phpconnect.php');
 
-*/
   $deck = new Deck();
   $deck->createDeck();
   $deck->shuffle();
 
   $players = array();
-  $players[] = new Player('Jogador 1');
-  $players[] = new Player('Jogador 2');
+
+  $stmt = $conn->query("SELECT * FROM poker_player");
+  while ($row = $stmt->fetch()) {
+    $players[] = new Player($row['playerID'], $row['name']);
+  }
 
   $highestScore = 0;
   
@@ -51,6 +43,24 @@
 
   foreach($players as $player) {
     $player->winner = ($winner == $player);
+
+    if ($player->winner) {
+      $sql = "INSERT INTO poker_match_history(playerID, winnerScore, handName) VALUES (?,?,?)";
+      $stmt = $conn->prepare($sql);
+  
+      $id = $player->getPlayerID();
+      $score = $player->getHand()->getScore();
+      $hand_name = $player->getEvaluate()->getHandName();
+  
+      try {
+        $stmt->execute([$id, $score, $hand_name]);
+        $conn->beginTransaction();
+        $conn->commit();
+      } catch (Exception $e) {
+        $conn->rollback();
+        throw $e;
+      }
+    }
   }
 
   $dados = array(
@@ -60,5 +70,6 @@
   $dados_json = json_encode($dados);
 
   echo $dados_json;
+
 
 ?>

@@ -1,5 +1,19 @@
 <?php
 
+/*
+  Royal Flush: Sequência de mesmo naipe de 10 a As
+  Straight Flush: Sequência de mesmo naipe fora do intervalo de 10 a As
+  Quadra: Quatro cartas iguais
+  Full House: Duas cartas iguais junto com três cartas iguais
+  Flush: Cinco cartas diferentes do mesmo naipe
+  Sequência: Cinco cartas em sequência de naipes diferentes
+  Trinca: Apenas três cartas iguais
+  Dois pares: Apenas dois pares de cartas iguais
+  Um par: Apenas um par de cartas iguais
+  Maior carta: Valor da maior carta.
+
+*/
+
   class evaluateHand implements JsonSerializable{
 
     private $high_card;
@@ -33,6 +47,7 @@
       foreach ($hand->getCards() as $card) {
         if ($card->getRank() == $high) {
           $this->high_card = $card;
+          $this->hand_name = "Carta mais alta: " . $card->getValue();
         }
       }
       $this->hand_rank = 1;
@@ -211,7 +226,7 @@
             $values = array_unique($values);
 
             $this->hand_name = "Full house: " . $values['trinca'] 
-            . "'s full of " . $values['par'] . "'s";
+            . "'s e " . $values['par'] . "'s";
             $this->hand_rank = 7;
           }
     }
@@ -249,7 +264,7 @@
     public function straightFlush($hand) {
       // retorna um straight flush, se houver
       if ($this->straight($hand) && $this->flush($hand)) {
-        $this->hand_name = "Straight flush: " . $this->high_card->getValue() . " alta";
+        $this->hand_name = "Straight flush até " . $this->high_card->getValue();
         $this->hand_rank = 9;
       }
     }

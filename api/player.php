@@ -1,11 +1,12 @@
 <?php
   class Player implements JsonSerializable{
 
-    public $name;
-    public $hand;
-    public $evaluate;
+    private $name;
+    private $hand;
+    private $evaluate;
 
-    public function __construct($name) {
+    public function __construct($id, $name) {
+      $this->playerID = $id;
       $this->name = $name;
       $this->hand = new Hand();
       $this->evaluate = new evaluateHand();
@@ -23,8 +24,16 @@
       return $this->name;
     }
 
+    public function getPlayerID() {
+      return $this->playerID;
+    }
+
     public function getHand() {
       return $this->hand;
+    }
+
+    public function getEvaluate() {
+      return $this->evaluate;
     }
 
     public function evaluateHand() {

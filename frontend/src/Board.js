@@ -11,7 +11,7 @@ export default class Poker extends Component {
   }
 
   loadHands() {
-    fetch(`https://desafio-php-asc.appspot.com/`)
+    fetch(`https://desafio-asc-php.000webhostapp.com/`)
       .then(res => res.json())
       .then(res => this.setState({ matchData: res }));
   }
