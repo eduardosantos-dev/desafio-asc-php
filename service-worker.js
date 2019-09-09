@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/desafio-asc-php/precache-manifest.ef218c0af1a9c735842e277224271b0d.js"
+  "/desafio-asc-php/precache-manifest.31918b8aa8fe019fdda0d5270c2df734.js"
 );
 
 self.addEventListener('message', (event) => {
