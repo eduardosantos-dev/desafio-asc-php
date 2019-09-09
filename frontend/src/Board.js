@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default class Poker extends Component {
   constructor(props) {
@@ -68,42 +69,61 @@ export default class Poker extends Component {
   render() {
     const { matchData } = this.state;
     const { players } = matchData;
+
     return (
       <Container>
-        {players &&
-          players.map(player => (
-            <div style={{ margin: 50 }} key={player.name}>
-              <Row style={{ justifyContent: "center" }}>
-                <h1>
-                  {player.name}
-                  {player.winner === true ? ` 👑` : null}
-                </h1>
-              </Row>
-              <Row style={{ justifyContent: "center" }}>
-                {player.evaluate.hand_name ? (
-                  <h1> {player.evaluate.hand_name} </h1>
-                ) : (
-                  <h1>
-                    Carta mais alta:{" "}
-                    {`${this.getCardName(player.evaluate.high_card.value)} de
+        {Object.entries(matchData).length === 0 ? (
+          <Row style={{ justifyContent: "center", marginTop: 100 }}>
+            <ClipLoader
+              sizeUnit={"px"}
+              size={50}
+              color={"red"}
+              loading={true}
+            />
+          </Row>
+        ) : (
+          <>
+            {players &&
+              players.map(player => (
+                <div style={{ margin: 50 }} key={player.name}>
+                  <Row style={{ justifyContent: "center" }}>
+                    <h1>
+                      {player.name}
+                      {player.winner === true ? ` 👑` : null}
+                    </h1>
+                  </Row>
+                  <Row style={{ justifyContent: "center" }}>
+                    {player.evaluate.hand_name ? (
+                      <h1> {player.evaluate.hand_name} </h1>
+                    ) : (
+                      <h1>
+                        Carta mais alta:{" "}
+                        {`${this.getCardName(
+                          player.evaluate.high_card.value
+                        )} de
                         ${this.getSuitName(player.evaluate.high_card.suit)}`}
-                  </h1>
-                )}
-              </Row>
-              <Row>
-                <Col md={12}>{player.hand && <Hand hand={player.hand} />}</Col>
-              </Row>
-            </div>
-          ))}
-        <Row style={{ justifyContent: "center" }}>
-          <Button
-            variant="dark"
-            style={{ margin: 25 }}
-            onClick={() => this.loadHands()}
-          >
-            Jogar novamente ⭯
-          </Button>
-        </Row>
+                      </h1>
+                    )}
+                  </Row>
+                  <Row>
+                    <Col md={12}>
+                      {player.hand && <Hand hand={player.hand} />}
+                    </Col>
+                  </Row>
+                </div>
+              ))}
+            )
+            <Row style={{ justifyContent: "center" }}>
+              <Button
+                variant="dark"
+                style={{ margin: 25 }}
+                onClick={() => this.loadHands()}
+              >
+                Jogar novamente ⭯
+              </Button>
+            </Row>
+          </>
+        )}
       </Container>
     );
   }
