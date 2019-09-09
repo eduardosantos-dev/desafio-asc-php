@@ -112,7 +112,7 @@ export default class Poker extends Component {
                   </Row>
                 </div>
               ))}
-            )
+
             <Row style={{ justifyContent: "center" }}>
               <Button
                 variant="dark"
